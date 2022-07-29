@@ -1,11 +1,6 @@
 import React from 'react';
+import Menu from "./containers/Menu/Menu";
 
-const App = () => {
-    return (
-        <div>
-          
-        </div>
-    );
-};
+const App = () => <Menu/>;
 
 export default App;
