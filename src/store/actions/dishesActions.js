@@ -12,9 +12,16 @@ export const fetchDishes = () => {
     return async dispatch => {
         try {
             dispatch(fetchDishesRequest());
-            const response = await axios('https://menu-ccd28-default-rtdb.europe-west1.firebasedatabase.app/dishes/');
-            console.log(response);
-            dispatch(fetchDishesSuccess());
+            const response = await axios('https://menu-ccd28-default-rtdb.europe-west1.firebasedatabase.app/dishes.json');
+            const data = response.data;
+
+            if (data) {
+                const dishes = Object.keys(data).map(id => {
+                    const dish = data[id];
+                    return {...dish, id};
+                });
+                dispatch(fetchDishesSuccess(dishes));
+            }
         } catch (error) {
             dispatch(fetchDishesFailure(error));
         }

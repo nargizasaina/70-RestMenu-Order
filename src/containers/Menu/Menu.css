@@ -1,0 +1,6 @@
+.MainPart{
+    max-width: 1000px;
+    margin: 0 auto;
+    background: thistle;
+    display: flex;
+}

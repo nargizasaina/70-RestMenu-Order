@@ -1,0 +1,8 @@
+.Row{
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.Row:hover{
+    background: thistle;
+}
