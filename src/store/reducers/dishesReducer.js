@@ -9,9 +9,9 @@ const initialState = {
 const dishesReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_DISHES_REQUEST:
-            return {...state, loading: true};
+            return {...state, loading: true, error: null};
         case FETCH_DISHES_SUCCESS:
-            return {...state, loading: false, dishes: action.payload};
+            return {...state, loading: false, error: null, dishes: action.payload};
         case FETCH_DISHES_FAILURE:
             return {...state, loading: false, error: action.payload};
         default:

@@ -36,7 +36,6 @@ const OrderInfo = ({onChange, contactData, onSubmit}) => {
             </Stack>
             <Button variant="contained" color="success" type="submit">Confirm order</Button>
         </form>
-
     );
 };
 
