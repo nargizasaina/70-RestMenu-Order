@@ -14,10 +14,12 @@ import Cart from "../../components/Cart/Cart";
 import OrderInfo from "../../components/OrderInfo/OrderInfo";
 import Modal from "../../components/UI/Modal/Modal";
 import './Menu.css';
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 const Menu = () => {
     const dispatch = useDispatch();
     const dishes = useSelector(state => state.menu.dishes);
+    const loading = useSelector(state => state.menu.loading);
     const cartOrders = useSelector(state => state.cart.orders);
     const totalPrice = useSelector(state => state.cart.totalPrice);
     const purchasing = useSelector(state => state.cart.purchasing);
@@ -72,12 +74,18 @@ const Menu = () => {
             dispatch(postOrder({contactData, cartOrders}));
             dispatch(setPurchasingOpen(false));
             dispatch(initCart());
+            setContactData({
+                name: '',
+                address: '',
+                number: ''
+            });
+            console.log('Order data is successfully sent!');
         } else {
             alert('Please enter all required information');
         }
     };
 
-    return (
+    let showPage = (
         <>
             <Modal
                 show={purchasing}
@@ -114,6 +122,12 @@ const Menu = () => {
             </div>
         </>
     );
+
+    if(loading) {
+        showPage = <Spinner/>
+    }
+
+    return (showPage);
 };
 
 export default Menu;
