@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper';
 import {BASE_DELIVERY} from "../../constants";
 import './Cart.css';
 
-const Cart = ({cart, totalPrice, onClick, onOrderClick}) => {
+const Cart = ({cart, totalPrice, onRemoveClick, onOrderClick, dishes}) => {
     return (
         <div className="Parts">
             <h4 className="PartsTitle">Cart</h4>
@@ -31,7 +31,7 @@ const Cart = ({cart, totalPrice, onClick, onOrderClick}) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {Object.keys(cart).map((order) => (
+                                {Object.keys(cart).map((order, index) => (
                                     (cart[order] > 0) ?
                                         (<TableRow
                                         key={order}
@@ -41,12 +41,12 @@ const Cart = ({cart, totalPrice, onClick, onOrderClick}) => {
                                             component="th"
                                             scope="row"
                                             className="Row"
-                                            onClick={() => onClick(order, )}
+                                            onClick={() => onRemoveClick(order, dishes[index].price)}
                                         >
                                             {order}
                                         </TableCell>
                                         <TableCell align="right">{cart[order]}</TableCell>
-                                        <TableCell align="right">{order.price}</TableCell>
+                                        <TableCell align="right">{dishes[index].price * cart[order]}</TableCell>
                                     </TableRow>) : null
                                 ))}
                             </TableBody>

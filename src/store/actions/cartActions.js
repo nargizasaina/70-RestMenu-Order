@@ -3,12 +3,12 @@ import {BASE_URL} from "../../constants";
 
 export const INIT_CART = 'INIT_CART';
 export const ADD_TO_CART = 'ADD_TO_CART';
-export const ADD_TO_TOTAL_PRICE = 'ADD_TO_TOTAL_PRICE';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const SET_PURCHASING_OPEN = 'SET_PURCHASING_OPEN';
 
 export const initCart = () => ({type: INIT_CART});
-export const addToCart = (type) => ({type: ADD_TO_CART, payload: type});
-export const addToTotalPrice = (price) => ({type: ADD_TO_TOTAL_PRICE, payload: price});
+export const addToCart = (data) => ({type: ADD_TO_CART, payload: {type: data.type, price: data.price}});
+export const removeFromCart = (data) => ({type: REMOVE_FROM_CART, payload: {type: data.type, price: data.price}});
 export const setPurchasingOpen = isOpen => ({type: SET_PURCHASING_OPEN, payload: isOpen});
 
 export const ORDER_REQUEST = 'ORDER_REQUEST';

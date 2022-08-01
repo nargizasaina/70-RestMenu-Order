@@ -3,7 +3,13 @@ import {useDispatch, useSelector} from "react-redux";
 import Header from "../../components/Header/Header";
 import Dishes from "../../components/Dishes/Dishes";
 import {fetchDishes} from "../../store/actions/dishesActions";
-import {addToCart, addToTotalPrice, postOrder, setPurchasingOpen} from "../../store/actions/cartActions";
+import {
+    addToCart,
+    initCart,
+    postOrder,
+    removeFromCart,
+    setPurchasingOpen
+} from "../../store/actions/cartActions";
 import Cart from "../../components/Cart/Cart";
 import OrderInfo from "../../components/OrderInfo/OrderInfo";
 import Modal from "../../components/UI/Modal/Modal";
@@ -12,7 +18,7 @@ import './Menu.css';
 const Menu = () => {
     const dispatch = useDispatch();
     const dishes = useSelector(state => state.menu.dishes);
-    const cart = useSelector(state => state.cart.orders);
+    const cartOrders = useSelector(state => state.cart.orders);
     const totalPrice = useSelector(state => state.cart.totalPrice);
     const purchasing = useSelector(state => state.cart.purchasing);
 
@@ -27,12 +33,11 @@ const Menu = () => {
     }, [dispatch]);
 
     const onAddClick = (type, price) => {
-        dispatch(addToCart(type));
-        dispatch(addToTotalPrice(price));
+        dispatch(addToCart({type: type, price: price}));
     };
 
     const onRemoveClick = (type, price) => {
-
+        dispatch(removeFromCart({type: type, price: price}));
     };
 
     const onOrderClick = () => {
@@ -64,8 +69,9 @@ const Menu = () => {
         }
 
         if (sendData) {
-            dispatch(postOrder({contactData, cart}));
+            dispatch(postOrder({contactData, cartOrders}));
             dispatch(setPurchasingOpen(false));
+            dispatch(initCart());
         } else {
             alert('Please enter all required information');
         }
@@ -99,10 +105,11 @@ const Menu = () => {
                     ))}
                 </div>
                 <Cart
-                    cart={cart}
+                    cart={cartOrders}
                     totalPrice={totalPrice}
-                    onClick={onRemoveClick}
+                    onRemoveClick={onRemoveClick}
                     onOrderClick={onOrderClick}
+                    dishes={dishes}
                 />
             </div>
         </>
