@@ -14,12 +14,11 @@ import Paper from '@mui/material/Paper';
 import {BASE_DELIVERY} from "../../constants";
 import './Cart.css';
 
-const Cart = ({cart, totalPrice, onClick}) => {
-    console.log(Object.keys(cart));
-    console.log(cart);
+const Cart = ({cart, totalPrice, onClick, onOrderClick}) => {
     return (
         <div className="Parts">
             <h4 className="PartsTitle">Cart</h4>
+            {(totalPrice !== 5) ? (
             <Box sx={{ minWidth: 275 }}>
                 <Card variant="outlined">
                     <TableContainer component={Paper}>
@@ -33,7 +32,8 @@ const Cart = ({cart, totalPrice, onClick}) => {
                             </TableHead>
                             <TableBody>
                                 {Object.keys(cart).map((order) => (
-                                    <TableRow
+                                    (cart[order] > 0) ?
+                                        (<TableRow
                                         key={order}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
@@ -47,7 +47,7 @@ const Cart = ({cart, totalPrice, onClick}) => {
                                         </TableCell>
                                         <TableCell align="right">{cart[order]}</TableCell>
                                         <TableCell align="right">{order.price}</TableCell>
-                                    </TableRow>
+                                    </TableRow>) : null
                                 ))}
                             </TableBody>
                         </Table>
@@ -61,10 +61,10 @@ const Cart = ({cart, totalPrice, onClick}) => {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small">Place order</Button>
+                        <Button size="small" onClick={onOrderClick}>Place order</Button>
                     </CardActions>
                 </Card>
-            </Box>
+            </Box>) : <p>Cart is empty! <br/> Please choose any dish to add to cart</p>}
         </div>
     );
 };

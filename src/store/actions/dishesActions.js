@@ -1,4 +1,5 @@
 import axios from "axios";
+import {BASE_URL} from "../../constants";
 
 export const FETCH_DISHES_REQUEST = 'FETCH_DISHES_REQUEST';
 export const FETCH_DISHES_SUCCESS = 'FETCH_DISHES_SUCCESS';
@@ -12,7 +13,7 @@ export const fetchDishes = () => {
     return async dispatch => {
         try {
             dispatch(fetchDishesRequest());
-            const response = await axios('https://menu-ccd28-default-rtdb.europe-west1.firebasedatabase.app/dishes.json');
+            const response = await axios(BASE_URL + 'dishes.json');
             const data = response.data;
 
             if (data) {
